@@ -39,7 +39,7 @@ export default class HeroSelectScene extends Component {
 
         //var image = require(rowData.imageURL);
         return (
-            <Image source={{uri: '../../images/liubei.jpg'}} style={{width: 200, height: 100}}/>
+            <Image source={require('../../images/liubei.jpg')} />
         );
     }
 
