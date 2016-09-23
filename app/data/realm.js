@@ -13,7 +13,7 @@ Hero.schema = {
     faction: {type: 'string'},
     abilities: {type: 'list', objectType: 'Ability'},
     partners: {type: 'Hero', optional: true},
-    imageURL: {type: 'string'}
+    imageKey: {type: 'string'}
   }
 };
 

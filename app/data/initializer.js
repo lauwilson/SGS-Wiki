@@ -14,7 +14,7 @@ export default function initializeDummyData() {
             health: 2,
             faction: 'Shu',
             abilities: realm.objects('Ability').filtered('hero = "Liu Bei"'),
-            imageURL: '../../images/liubei.jpg'
+            imageKey: 'liubei'
         });
 
         // Cao Cao
@@ -25,7 +25,7 @@ export default function initializeDummyData() {
             health: 2,
             faction: 'Wei',
             abilities: realm.objects('Ability').filtered('hero = "Cao Cao"'),
-            imageURL: '../../images/caocao.jpg'
+            imageKey: 'caocao'
         })
 
         // Sun Quan
@@ -36,7 +36,7 @@ export default function initializeDummyData() {
             health: 2,
             faction: 'Wu',
             abilities: realm.objects('Ability').filtered('hero = "Sun Quan"'),
-            imageURL: '../../images/sunquan.jpg'
+            imageKey: 'sunquan'
         })
 
         realm.create('Ability', { id: 4, hero: 'Zhang Jiao', name: 'Lightning Strike', description: 'Whenever you use or play a DODGE 闪, you can select another player to make a judgement. If the result is the suit of spades, you inflict 2 units of lightning damage to that player.'});
@@ -47,7 +47,7 @@ export default function initializeDummyData() {
             health: 2,
             faction: 'Legendary Heroes',
             abilities: realm.objects('Ability').filtered('hero = "Zhang Jiao"'),
-            imageURL: '../../images/zhangjiao.jpg'
+            imageKey: 'zhangjiao'
         })
     });
 }

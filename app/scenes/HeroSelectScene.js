@@ -10,6 +10,7 @@ import { ListView } from 'realm/react-native';
 
 import realm from '../data/realm.js';
 import initializeDummyData from '../data/initializer.js';
+import getImage from '../data/image_manifest.js';
 
 export default class HeroSelectScene extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ export default class HeroSelectScene extends Component {
 
         //var image = require(rowData.imageURL);
         return (
-            <Image source={require('../../images/liubei.jpg')} />
+            <Image source={getImage('caocao')} />
         );
     }
 
