@@ -8,6 +8,7 @@ import StatusBarBackground from './components/StatusBarBackground.js';
 import SplashScene from './scenes/SplashScene.js';
 import SecondScene from './scenes/SecondScene.js';
 import CardSelectScene from './scenes/CardSelectScene.js';
+import HeroSelectScene from './scenes/HeroSelectScene.js';
 
 class SgsWiki extends Component {
     constructor(props) {
@@ -26,8 +27,9 @@ class SgsWiki extends Component {
 const scenes = Actions.create(
     <Scene key='root'>
         <Scene key='splash' component={SplashScene} title='Splash Scene' />
-        <Scene key='second' component={SecondScene} title='Second Scene' />
-        <Scene initial={true} key='cardSelect' component={CardSelectScene} title='Card Select Scene' />
+        <Scene key='second' component={SecondScene} title='Second Scene' tabs={true} />
+        <Scene key='cardSelect' component={CardSelectScene} title='Card Select Scene' />
+        <Scene initial={true} key='heroes' component={HeroSelectScene} title='Heroes' />
     </Scene>
 );
 
