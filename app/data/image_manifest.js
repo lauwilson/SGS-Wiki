@@ -12,12 +12,11 @@ export default function getImage(key) {
         case 'sunquan':
             image = require('../../images/sunquan.jpg');
             break;
-        case 'sunquan':
+        case 'zhangjiao':
             image = require('../../images/zhangjiao.jpg');
             break;
         default:
             image = require('../../images/default.jpg');
-
     }
     return image;
 }
