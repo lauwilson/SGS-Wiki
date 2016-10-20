@@ -1,17 +1,17 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { Dimensions, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ViewContainer from '../components/ViewContainer.js';
 import StatusBarBackground from '../components/StatusBarBackground.js';
-import { HEADER_HEIGHT } from '../StyleConstants.js';
+import { HEADER_HEIGHT, CARD_ASPECT_RATIO } from '../StyleConstants.js';
 import { ListView } from 'realm/react-native';
-
 import realm from '../data/realm.js';
 import initializeDummyData from '../data/initializer.js';
 import getImage from '../data/image_manifest.js';
 
+/* TODO: Clean up debug styling in returned JSX elements */
 export default class HeroSelectScene extends Component {
     constructor(props) {
         super(props);
@@ -38,19 +38,34 @@ export default class HeroSelectScene extends Component {
             console.log(highlightRow);
         }
 
-        //var image = require(rowData.imageURL);
+        var margin = 10;
+        var cardWidth = (this.screenWidth - (8 * margin)) / 3;
+        var cardHeight = CARD_ASPECT_RATIO * cardWidth;
+
         return (
-            <Image source={getImage('caocao')} />
+            <TouchableOpacity style={{width: cardWidth,
+                                        height: cardHeight,
+                                        margin: 10,
+                                        backgroundColor: 'red'}}
+                                onPress={Actions.cardDetail}>
+                <Image source={getImage('liubei')}
+                                 style={{width: cardWidth,
+                                        height: cardHeight,
+                                        backgroundColor: 'green'}} />
+            </TouchableOpacity>
         );
     }
 
     render() {
+        this.screenWidth = Dimensions.get('window').width;
+
         return (
             <ViewContainer style={{flex: 1, backgroundColor: 'red'}}>
                 <StatusBarBackground style={{ height: HEADER_HEIGHT }} />
                 <ListView contentContainerStyle={styles.list}
                             dataSource={this.state.dataSource}
-                            renderRow={this._renderRow} />
+                            renderRow={this._renderRow}
+                            screenWidth={this.screenWidth} />
             </ViewContainer>
         );
     }
@@ -60,12 +75,11 @@ const styles = StyleSheet.create({
     list: {
         justifyContent: 'center',
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        backgroundColor: 'blue'
     },
     item: {
         backgroundColor: '#CCC',
-        margin: 10,
-        width: 100,
-        height: 100
+        margin: 10
     }
 })

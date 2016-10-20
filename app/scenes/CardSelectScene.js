@@ -10,10 +10,10 @@ import { HEADER_HEIGHT } from '../StyleConstants.js';
 export default class CardSelectScene extends Component {
     render() {
         return (
-            <ViewContainer>
+            <ViewContainer style={{flex: 1}}>
                 <StatusBarBackground style={{ height: HEADER_HEIGHT }} />
-                <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
-                    <TouchableOpacity onPress={Actions.splash} style={{ alignItems: 'center', backgroundColor: 'green' }}>
+                <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'red' }}>
+                    <TouchableOpacity onPress={Actions.heroes} style={{ alignItems: 'center', backgroundColor: 'green' }}>
                         <Image onPress={Actions.splash} source={require('../../images/liubei.jpg')} />
                         <Text>Heroes</Text>
                     </TouchableOpacity>

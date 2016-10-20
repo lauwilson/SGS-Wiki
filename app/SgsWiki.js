@@ -9,6 +9,7 @@ import SplashScene from './scenes/SplashScene.js';
 import SecondScene from './scenes/SecondScene.js';
 import CardSelectScene from './scenes/CardSelectScene.js';
 import HeroSelectScene from './scenes/HeroSelectScene.js';
+import CardDetailScene from './scenes/CardDetailScene.js';
 
 class SgsWiki extends Component {
     constructor(props) {
@@ -30,6 +31,7 @@ const scenes = Actions.create(
         <Scene key='second' component={SecondScene} title='Second Scene' tabs={true} />
         <Scene key='cardSelect' component={CardSelectScene} title='Card Select Scene' />
         <Scene initial={true} key='heroes' component={HeroSelectScene} title='Heroes' />
+        <Scene key='cardDetail' component={CardDetailScene} title='Card Details' />
     </Scene>
 );
 
