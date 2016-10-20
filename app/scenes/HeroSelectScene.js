@@ -42,13 +42,16 @@ export default class HeroSelectScene extends Component {
         var cardWidth = (this.screenWidth - (8 * margin)) / 3;
         var cardHeight = CARD_ASPECT_RATIO * cardWidth;
 
+        var goToCardDetailWithProps = () => Actions.cardDetail({heroData: rowData, title: rowData.name});
+
         return (
             <TouchableOpacity style={{width: cardWidth,
                                         height: cardHeight,
                                         margin: 10,
                                         backgroundColor: 'red'}}
-                                onPress={Actions.cardDetail}>
-                <Image source={getImage('liubei')}
+                                onPress={goToCardDetailWithProps}
+                                heroData={rowData}>
+                <Image source={getImage(rowData.imageKey)}
                                  style={{width: cardWidth,
                                         height: cardHeight,
                                         backgroundColor: 'green'}} />
