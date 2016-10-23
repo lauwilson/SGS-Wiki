@@ -45,7 +45,7 @@ export default function initializeDummyData() {
             id: 3,
             name: 'Zhang Jiao',
             health: 2,
-            faction: 'Legendary Heroes',
+            faction: 'Legend',
             abilities: realm.objects('Ability').filtered('hero = "Zhang Jiao"'),
             imageKey: 'zhangjiao'
         })
