@@ -5,15 +5,13 @@ import Realm from 'realm';
 class Hero {}
 Hero.schema = {
   name: 'Hero',
-  primaryKey: 'name',
+  primaryKey: 'key',
   properties: {
-    id: {type: 'int'},
+    key: {type: 'string'},
     name:  {type: 'string'},
-    health: {type: 'float'},
     faction: {type: 'string'},
     abilities: {type: 'list', objectType: 'Ability'},
-    partners: {type: 'Hero', optional: true},
-    imageKey: {type: 'string'}
+    partners: {type: 'list', objectType: 'Hero'}
   }
 };
 
@@ -21,10 +19,8 @@ class Ability {}
 Ability.schema = {
     name: 'Ability',
     properties: {
-        id: {type: 'int'},
-        hero: {type: 'string'},
         name: {type: 'string'},
-        description: {type: 'string'}
+        description: {type: 'string'},
     }
 }
 {/*
@@ -39,6 +35,16 @@ function _migration(oldSchema, newSchema) {
     }
 }
 */}
-// Get the default Realm with support for our objects
-console.log(Realm.defaultPath);
-export default new Realm({schema: [Hero, Ability]});
+
+function getDeviceRootDir() {
+    let substringEndIdx = Realm.defaultPath.lastIndexOf('/', Realm.defaultPath.lastIndexOf('/') - 1);
+    return Realm.defaultPath.substring(0, substringEndIdx);
+}
+
+let realmPath = getDeviceRootDir() + "/Library/LocalDatabase/sgs-wiki.realm";
+// Export the pre-bundled Realm with support for our objects
+export default new Realm({
+    readOnly: true,
+    path: realmPath,
+    schema: [Hero, Ability]
+});
