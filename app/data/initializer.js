@@ -1,53 +1,98 @@
 'use strict';
 
 import realm from './realm.js';
+import _ from 'lodash';
 
-export default function initializeDummyData() {
+/**
+ *  Generates a hero key from the given string which represents a hero's partner.
+ *  @param {string} partner :   This is a string which a key can be parsed from.
+ *                              e.g. e.g. Gan Fu Ren (Lady Gan) 甘夫人
+ *
+ *  @return {string}        :   The key to access the given hero in the Realm database.
+ *                              e.g. gan-fu-ren-lady-gan
+ */
+function generateKeyFromPartnerString(partner) {
+    let MIN_CJK_UNICODE = parseInt("0x4E00",16);
+    let MAX_CJK_UNICODE = parseInt("0x9FFF",16);
+    let substringEndIdx;
+
+    for (var i = 0; i < partner.length; i++) {
+        let charHexCode = partner.charCodeAt(i);
+        if ((charHexCode >= MIN_CJK_UNICODE && charHexCode <= MAX_CJK_UNICODE) ||
+                (partner[i] == '(' && partner.substring(i+1, i+5) != "Lady")) {
+            substringEndIdx = i;
+            break;
+        }
+    }
+    let partnerKey = partner.substring(0, substringEndIdx)
+                            .trim()
+                            // replace '(', ')', and '&amp;' with ''
+                            .replace(/\(|\)|&amp;/g, '')
+                            // replace '  ' artifact from previous replacement
+                            .replace(/  /g, ' ')
+                            .toLowerCase()
+                            .replace(/ /g, '-')
+    return partnerKey;
+}
+
+/**
+ *  Retrieves the Hero object from the Realm database, given a partner string.
+ *  Function will internally convert the partner string into a partner key before
+ *  Realm lookup.
+ *  @param {string} partner :   This is a string which represents a Hero name.
+ *                              e.g. e.g. Gan Fu Ren (Lady Gan) 甘夫人
+ *
+ *  @return {Hero}        :   The Hero object retrieved from the Realm database.
+ */
+function getHeroFromPartnerString(partner) {
+    var heroKey = generateKeyFromPartnerString(partner);
+    var hero = realm.objects('Hero').filtered('key == $0', heroKey)
+    return hero[0];
+}
+/**
+ *  Populates the Realm database with the requisite data.
+ *
+ *  Note: Requires the file './heroes.json' to exist in the same directory.
+ *        Currently, function does not perform error checking and will catastrophically
+ *        fail if the above requirement is not met.
+ */
+export default function initializeData() {
     realm.write(() => {
         realm.deleteAll();
+    })
 
-        // Liu Bei
-        realm.create('Ability', { id: 1, hero: 'Liu Bei', name: 'Benevolence', description: 'During your action phase, you can give any number of on-hand cards to any other player. If you give three or more on-hand cards away in a single phase, you regain 1 unit of health.'});
-        realm.create('Hero', {
-            id: 1,
-            name: 'Liu Bei',
-            health: 2,
-            faction: 'Shu',
-            abilities: realm.objects('Ability').filtered('hero = "Liu Bei"'),
-            imageKey: 'liubei'
+    var heroes = require('./heroes.json');
+
+    let numHeroes = heroes.length;
+    for (var i = 0; i < numHeroes; i++) {
+        let hero = heroes[i];
+
+        realm.write(() => {
+            realm.create('Hero', {
+                key: hero['key'],
+                name: hero['name'],
+                faction: hero['faction'],
+                abilities: hero['abilities']
+            });
         });
+    }
 
-        // Cao Cao
-        realm.create('Ability', { id: 2, hero: 'Cao Cao', name: 'Villainous Hero', description: 'Every instance after you suffer damage, you can acquire the card that inflicted damage on you.'});
-        realm.create('Hero', {
-            id: 2,
-            name: 'Cao Cao',
-            health: 2,
-            faction: 'Wei',
-            abilities: realm.objects('Ability').filtered('hero = "Cao Cao"'),
-            imageKey: 'caocao'
-        })
+    for (var i = 0; i < numHeroes; i++) {
+        let hero = heroes[i];
 
-        // Sun Quan
-        realm.create('Ability', { id: 3, hero: 'Sun Quan', name: 'Balance of Power', description: 'During your action phase, you can discard up to X cards (X being your maximum health units), then draw the same number of cards. Limited to once per phase.'});
-        realm.create('Hero', {
-            id: 3,
-            name: 'Sun Quan',
-            health: 2,
-            faction: 'Wu',
-            abilities: realm.objects('Ability').filtered('hero = "Sun Quan"'),
-            imageKey: 'sunquan'
-        })
+        let partnerList;
+        if (hero['partners'].length < 1 ||
+                hero['partners'][0].substring(0, 3).toUpperCase() == 'NIL') {
+            partnerList = null;
+        } else {
+            partnerList = _.map(hero['partners'], getHeroFromPartnerString);
+        }
 
-        realm.create('Ability', { id: 4, hero: 'Zhang Jiao', name: 'Lightning Strike', description: 'Whenever you use or play a DODGE 闪, you can select another player to make a judgement. If the result is the suit of spades, you inflict 2 units of lightning damage to that player.'});
-        realm.create('Ability', { id: 5, hero: 'Zhang Jiao', name: 'Dark Sorcery', description: 'Before the judgement card of a player takes effect, you can interchange that judgement card with a black-suited card.'});
-        realm.create('Hero', {
-            id: 3,
-            name: 'Zhang Jiao',
-            health: 2,
-            faction: 'Legend',
-            abilities: realm.objects('Ability').filtered('hero = "Zhang Jiao"'),
-            imageKey: 'zhangjiao'
-        })
-    });
+        realm.write(() => {
+            realm.create('Hero', {
+                key: hero['key'],
+                partners: partnerList
+            }, true);
+        });
+    }
 }

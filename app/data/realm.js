@@ -36,6 +36,10 @@ function _migration(oldSchema, newSchema) {
 }
 */}
 
+/**
+ *  Returns the root directory for the device.
+ *  @return {string}    :   The root directory for the device.
+ */
 function getDeviceRootDir() {
     let substringEndIdx = Realm.defaultPath.lastIndexOf('/', Realm.defaultPath.lastIndexOf('/') - 1);
     return Realm.defaultPath.substring(0, substringEndIdx);
