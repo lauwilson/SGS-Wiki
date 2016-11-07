@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import ViewContainer from '../components/ViewContainer.js';
 import StatusBarBackground from '../components/StatusBarBackground.js';
 import { HEADER_HEIGHT, CARD_ASPECT_RATIO } from '../StyleConstants.js';
+import realm from '../data/realm.js';
 import getImage from '../data/image_manifest.js'
 
 export default class CardDetailScene extends Component {
@@ -17,7 +18,7 @@ export default class CardDetailScene extends Component {
             <ViewContainer>
                 <StatusBarBackground style={{ height: HEADER_HEIGHT }} />
                 <View style={{margin: 15}}>
-                    <Image source={getImage(this.props.heroData.imageKey)}
+                    <Image source={getImage(this.props.heroData.key)}
                             style={[styles.heroImage, {height: cardHeight, width: cardWidth }]}/>
                     <Text style={styles.heading}>Abilities</Text>
                     {

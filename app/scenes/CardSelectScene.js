@@ -14,7 +14,7 @@ export default class CardSelectScene extends Component {
                 <StatusBarBackground style={{ height: HEADER_HEIGHT }} />
                 <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'red' }}>
                     <TouchableOpacity onPress={Actions.heroes} style={{ alignItems: 'center', backgroundColor: 'green' }}>
-                        <Image onPress={Actions.splash} source={require('../../images/liubei.jpg')} />
+                        <Image onPress={Actions.splash} source={require('../../images/liu-bei.jpg')} />
                         <Text>Heroes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={Actions.second} style={{ alignItems: 'center', backgroundColor: 'cyan' }}>

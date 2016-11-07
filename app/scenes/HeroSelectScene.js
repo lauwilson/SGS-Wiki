@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Dimensions, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Tabs from 'react-native-tabs';
+import Realm from 'realm';
 import ViewContainer from '../components/ViewContainer.js';
 import StatusBarBackground from '../components/StatusBarBackground.js';
 import { HEADER_HEIGHT, CARD_ASPECT_RATIO } from '../StyleConstants.js';
@@ -20,26 +21,22 @@ TODO: Most likely, the ListView container will overlap with the bottom tab-bar. 
 export default class HeroSelectScene extends Component {
     constructor(props) {
         super(props);
+        //initializeDummyData();
 
         let dataSource = new ListView.DataSource({
             rowHasChanged(a,b) {
                 return a.done !== b.done || a.text !== b.text || a.items || b.items;
             }
         });
-
+        this.shuHeroes = realm.objects('Hero').filtered('faction = "Shu"');
+        this.weiHeroes = realm.objects('Hero').filtered('faction = "Wei"');
+        this.wuHeroes = realm.objects('Hero').filtered('faction = "Wu"');
+        this.neutralHeroes = realm.objects('Hero').filtered('faction = "Neutral"');
         this.state = { dataSource: dataSource.cloneWithRows(realm.objects('Hero').filtered('faction = "Shu"')), selectedFaction: 'Shu' }
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
-        if (rowID === 1)
-        {
-            console.log("Inside RowID 1")
-            console.log(rowData);
-            console.log(sectionID);
-            console.log(rowID);
-            console.log(highlightRow);
-        }
-
+    //_renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         var margin = 10;
         var cardWidth = (this.screenWidth - (8 * margin)) / 3;
         var cardHeight = CARD_ASPECT_RATIO * cardWidth;
@@ -51,9 +48,8 @@ export default class HeroSelectScene extends Component {
                                         height: cardHeight,
                                         margin: 10,
                                         backgroundColor: 'red'}}
-                                onPress={goToCardDetailWithProps}
-                                heroData={rowData}>
-                <Image source={getImage(rowData.imageKey)}
+                                onPress={goToCardDetailWithProps}>
+                <Image source={getImage(rowData.key)}
                                  style={{width: cardWidth,
                                         height: cardHeight,
                                         backgroundColor: 'green'}} />
@@ -77,7 +73,7 @@ export default class HeroSelectScene extends Component {
                     <Text name="Shu" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}} selectedStyle={{color:'red'}}>Shu</Text>
                     <Text name="Wei" selectedIconStyle={{borderTopWidth:2,borderTopColor:'blue'}} selectedStyle={{color:'blue'}}>Wei</Text>
                     <Text name="Wu" selectedIconStyle={{borderTopWidth:2,borderTopColor:'green'}} selectedStyle={{color:'green'}}>Wu</Text>
-                    <Text name="Legend" selectedIconStyle={{borderTopWidth:2, borderTopColor: 'grey'}} selectedStyle={{color:'grey'}}>Legend</Text>
+                    <Text name="Neutral" selectedIconStyle={{borderTopWidth:2, borderTopColor: 'grey'}} selectedStyle={{color:'grey'}}>Neutral</Text>
                 </Tabs>
             </ViewContainer>
         );
