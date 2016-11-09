@@ -19,11 +19,11 @@
   NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
   NSString *libraryDir = [paths objectAtIndex:0];
 
-  NSString *expectedRealmPath = [libraryDir stringByAppendingString:@"/LocalDatabase/sgs-wiki.realm"];
+  NSString *expectedRealmPath = [libraryDir stringByAppendingString:@"/LocalDatabase/sgswiki.realm"];
 
   // If expected Realm file doesn't exist. Copy it from the bundle.
   if (![fm fileExistsAtPath: expectedRealmPath]) {
-    NSString *bundledRealmPath = [[NSBundle mainBundle] pathForResource: @"sgs-wiki" ofType: @"realm" inDirectory: @"db/"];
+    NSString *bundledRealmPath = [[NSBundle mainBundle] pathForResource: @"sgswiki" ofType: @"realm" inDirectory: @"db/"];
     [fm copyItemAtPath: bundledRealmPath toPath: expectedRealmPath error: &error];
   }
 }
