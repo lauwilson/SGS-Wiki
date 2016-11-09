@@ -1,6 +1,7 @@
 'use strict';
 
 import Realm from 'realm';
+import { Platform } from 'react-native';
 
 class Hero {}
 Hero.schema = {
@@ -23,6 +24,7 @@ Ability.schema = {
         description: {type: 'string'},
     }
 }
+
 {/*
 function _migration(oldSchema, newSchema) {
     if (oldSchem.schemaVersion == 0) {
@@ -37,15 +39,28 @@ function _migration(oldSchema, newSchema) {
 */}
 
 /**
- *  Returns the root directory for the device.
+ *  Returns the files directory for the Android device.
+ *  @return {string}    :   The files directory for the device.
+ */
+function getAndroidFilesDir() {
+    let substringEndIdx = Realm.defaultPath.lastIndexOf('/');
+    return Realm.defaultPath.substring(0, substringEndIdx);
+}
+
+/**
+ *  Returns the root directory for the IOS device.
  *  @return {string}    :   The root directory for the device.
  */
-function getDeviceRootDir() {
+function getIOSRootDir() {
     let substringEndIdx = Realm.defaultPath.lastIndexOf('/', Realm.defaultPath.lastIndexOf('/') - 1);
     return Realm.defaultPath.substring(0, substringEndIdx);
 }
 
-let realmPath = getDeviceRootDir() + "/Library/LocalDatabase/sgs-wiki.realm";
+let realmPath = (Platform === 'ios') ? getIOSRootDir() + "/Library/LocalDatabase/sgswiki.realm" :
+                                      getAndroidFilesDir() + "/sgswiki.realm";
+
+console.log(realmPath);
+
 // Export the pre-bundled Realm with support for our objects
 export default new Realm({
     readOnly: true,
