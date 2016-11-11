@@ -26,11 +26,11 @@ class SgsWiki extends Component {
 
 const scenes = Actions.create(
     <Scene key='root'>
-        <Scene key='splash' component={SplashScene} title='Splash Scene' />
+        <Scene initial={true} key='splash' component={SplashScene} title='Splash Scene' />
         <Scene key='second' component={SecondScene} title='Second Scene' tabs={true} />
         <Scene key='cardSelect' component={CardSelectScene} title='Card Select Scene' />
         <Scene key='cardDetail' component={CardDetailScene} title='Card Details' />
-        <Scene initial={true} key='heroSelect' component={HeroSelectScene} title='Heroes' />
+        <Scene key='heroSelect' component={HeroSelectScene} title='Heroes' />
     </Scene>
 );
 
