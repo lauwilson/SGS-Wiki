@@ -26,6 +26,7 @@
 		95AF308EE0A549D88C31B12F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B3427AC4844C59B03C76D0 /* libz.tbd */; };
 		B7878F064F3741A5B59F4C84 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 019FA1259C8C4F3DB083C017 /* libc++.tbd */; };
 		C825F9931DD106D60074D11C /* RealmInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C825F9921DD106D60074D11C /* RealmInitializer.m */; };
+		C84CA2331DD68324006E5CFF /* db in Resources */ = {isa = PBXBuildFile; fileRef = C84CA2321DD68324006E5CFF /* db */; };
 		D79367ABA3504C77BBD32F95 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA586C8E9FE94F2CB334C500 /* libRealmReact.a */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +144,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		C825F9911DD106D60074D11C /* RealmInitializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RealmInitializer.h; path = SgsWiki/RealmInitializer.h; sourceTree = "<group>"; };
 		C825F9921DD106D60074D11C /* RealmInitializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RealmInitializer.m; path = SgsWiki/RealmInitializer.m; sourceTree = "<group>"; };
+		C84CA2321DD68324006E5CFF /* db */ = {isa = PBXFileReference; lastKnownFileType = folder; name = db; path = SgsWiki/db; sourceTree = "<group>"; };
 		EA586C8E9FE94F2CB334C500 /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -255,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				C825F9911DD106D60074D11C /* RealmInitializer.h */,
+				C84CA2321DD68324006E5CFF /* db */,
 				C825F9921DD106D60074D11C /* RealmInitializer.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -559,6 +562,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C84CA2331DD68324006E5CFF /* db in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
