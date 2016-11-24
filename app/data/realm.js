@@ -56,10 +56,8 @@ function getIOSRootDir() {
     return Realm.defaultPath.substring(0, substringEndIdx);
 }
 
-let realmPath = (Platform === 'ios') ? getIOSRootDir() + "/Library/LocalDatabase/sgswiki.realm" :
+let realmPath = (Platform.OS === 'ios') ? getIOSRootDir() + "/Library/LocalDatabase/sgswiki.realm" :
                                       getAndroidFilesDir() + "/sgswiki.realm";
-
-console.log(realmPath);
 
 // Export the pre-bundled Realm with support for our objects
 export default new Realm({
