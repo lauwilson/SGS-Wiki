@@ -59,9 +59,18 @@ function getIOSRootDir() {
 let realmPath = (Platform.OS === 'ios') ? getIOSRootDir() + "/Library/LocalDatabase/sgswiki.realm" :
                                       getAndroidFilesDir() + "/sgswiki.realm";
 
-// Export the pre-bundled Realm with support for our objects
+//Export the pre-bundled Realm with support for our objects
 export default new Realm({
     readOnly: true,
     path: realmPath,
+    schema: [Hero, Ability]
+});
+
+/*
+ * Named export for use with the initialzer. Initialzer will initialzed a new Realm database.
+ * with the default name and path of default.realm. Initialized Realm object needs to be
+ * manually extracted and put into the repository and the Android / iOS project manifests.
+*/
+export const initializerRealm = new Realm({
     schema: [Hero, Ability]
 });

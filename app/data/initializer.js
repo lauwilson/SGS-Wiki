@@ -1,6 +1,6 @@
 'use strict';
 
-import realm from './realm.js';
+import { initializerRealm } from './realm.js';
 import _ from 'lodash';
 
 /**
@@ -12,6 +12,7 @@ import _ from 'lodash';
  *                              e.g. gan-fu-ren-lady-gan
  */
 function generateKeyFromPartnerString(partner) {
+    // define the min and max unicode range for Chinese characters.
     let MIN_CJK_UNICODE = parseInt("0x4E00",16);
     let MAX_CJK_UNICODE = parseInt("0x9FFF",16);
     let substringEndIdx;
@@ -46,7 +47,7 @@ function generateKeyFromPartnerString(partner) {
  */
 function getHeroFromPartnerString(partner) {
     var heroKey = generateKeyFromPartnerString(partner);
-    var hero = realm.objects('Hero').filtered('key == $0', heroKey)
+    var hero = initializerRealm.objects('Hero').filtered('key == $0', heroKey)
     return hero[0];
 }
 /**
@@ -55,10 +56,14 @@ function getHeroFromPartnerString(partner) {
  *  Note: Requires the file './heroes.json' to exist in the same directory.
  *        Currently, function does not perform error checking and will catastrophically
  *        fail if the above requirement is not met.
+ *
+ *  Note 2: The initializer used will initialize the data into a default.realm file with non-readonly
+ *          file permissions. The initialized realm object currently needs to be manually copied
+ *          out into the repo and into the project manifests for android / iOS.
  */
 export function initializeData() {
-    realm.write(() => {
-        realm.deleteAll();
+    initializerRealm.write(() => {
+        initializerRealm.deleteAll();
     })
 
     var heroes = require('./heroes.json');
@@ -67,8 +72,8 @@ export function initializeData() {
     for (var i = 0; i < numHeroes; i++) {
         let hero = heroes[i];
 
-        realm.write(() => {
-            realm.create('Hero', {
+        initializerRealm.write(() => {
+            initializerRealm.create('Hero', {
                 key: hero['key'],
                 name: hero['name'],
                 faction: hero['faction'],
@@ -88,11 +93,12 @@ export function initializeData() {
             partnerList = _.map(hero['partners'], getHeroFromPartnerString);
         }
 
-        realm.write(() => {
-            realm.create('Hero', {
+        initializerRealm.write(() => {
+            initializerRealm.create('Hero', {
                 key: hero['key'],
                 partners: partnerList
             }, true);
         });
     }
+    initializerRealm.close();
 }
