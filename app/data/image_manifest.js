@@ -120,9 +120,6 @@ export default function getImage(key) {
 		case 'wei-yan':
 			image = require('../../images/wei-yan.jpg');
 			break;
-		case 'wooden_cow':
-			image = require('../../images/wooden_cow.jpg');
-			break;
 		case 'xiahou-dun':
 			image = require('../../images/xiahou-dun.jpg');
 			break;
