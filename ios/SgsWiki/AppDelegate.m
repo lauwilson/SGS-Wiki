@@ -11,6 +11,7 @@
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
+#import "RealmInitializer.h"
 
 @implementation AppDelegate
 
@@ -20,6 +21,8 @@
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
+  [RealmInitializer initRealm];
+  
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"SgsWiki"
                                                initialProperties:nil

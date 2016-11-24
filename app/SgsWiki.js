@@ -7,8 +7,8 @@ import ViewContainer from './components/ViewContainer.js';
 import StatusBarBackground from './components/StatusBarBackground.js';
 import SplashScene from './scenes/SplashScene.js';
 import SecondScene from './scenes/SecondScene.js';
-import CardSelectScene from './scenes/CardSelectScene.js';
 import HeroSelectScene from './scenes/HeroSelectScene.js';
+import CardSelectScene from './scenes/CardSelectScene.js';
 import CardDetailScene from './scenes/CardDetailScene.js';
 
 class SgsWiki extends Component {
@@ -17,7 +17,6 @@ class SgsWiki extends Component {
         console.log("SgsWiki Constructor");
         console.log(props);
     }
-
     render() {
         return (
             <Router scenes={scenes} />
@@ -27,11 +26,13 @@ class SgsWiki extends Component {
 
 const scenes = Actions.create(
     <Scene key='root'>
-        <Scene key='splash' component={SplashScene} title='Splash Scene' />
+        <Scene initial={true} key='splash' component={SplashScene} hideNavBar={true} title='Splash Screen' />
         <Scene key='second' component={SecondScene} title='Second Scene' tabs={true} />
         <Scene key='cardSelect' component={CardSelectScene} title='Card Select Scene' />
-        <Scene initial={true} key='heroes' component={HeroSelectScene} title='Heroes' />
         <Scene key='cardDetail' component={CardDetailScene} title='Card Details' />
+        <Scene key='heroSelect' component={HeroSelectScene} title='Heroes' hideNavBar={false}
+                navigationBarStyle={{backgroundColor: 'rgb(200,112,97)', borderBottomColor: '#000'}}
+                leftButtonIconStyle={{tintColor: '#000'}} />
     </Scene>
 );
 

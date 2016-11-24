@@ -71,7 +71,7 @@ class HeroListSpider(scrapy.Spider):
 
         # Note: Some pages contain hidden new-lines, therefore we need to cleanse the input before enumerating over
         #       the results.
-        hero_data = enumerate(map(lambda x: x.strip('\n'), response.css('div.post-body').extract()[0].split("<br>")))
+        hero_data = PeekableList([x.strip('\n') for x in response.css('div.post-body').extract()[0].split("<br>")])
         self.fill_hero_details(hero, hero_data)
         self.saveHeroImage(response, hero['key'])
 
@@ -90,33 +90,45 @@ class HeroListSpider(scrapy.Spider):
         Args:
             hero            :   the object which will contain all the parsed data. Some data members may be
                                 pre-populated with data.
-            splitHeroInfo   :   a list of strings containing <b> tags, empty strings, and text
+            splitHeroInfo   :   a PeekableList of strings containing <b> tags, empty strings, and text
                                 which represent the hero's details. These details will populate
                                 the hero object.
         """
 
         title_regex = re.compile('^(<b>)(.+)(</b>)')
-        ability_regex = re.compile('<b>Character ability[^\"]+(\".*)<\/b>')
+        ability_regex = re.compile('<b>Character ability[^\"\u201c]+((\"|\u201c).*)<\/b>')
         partners_regex = re.compile('<b>Synergistic Partners:<\/b>')
 
-        for idx, section in splitHeroInfo:
-            if title_regex.match(section):
+        for section in splitHeroInfo:
+            if title_regex.match(section) is not None:
                 # is it an ability title?
                 match = ability_regex.match(section)
-                if match != None:
-                    ability_name = match.group(1).strip()
-                    nextIdx, ability_desc = splitHeroInfo.__next__()
+                if match is not None:
+                    ability_name = match.group(1).replace('\"', '') \
+                                                 .replace('\u201c', '') \
+                                                 .replace('\u201d', '') \
+                                                 .strip()
+                    keepLooping = True
+                    ability_desc = ''
+                    while keepLooping:
+                        if title_regex.match(splitHeroInfo.peek()) is not None:
+                            keepLooping = False
+                        else:
+                            line = splitHeroInfo.__next__()
+                            ability_desc += (line + '\n') if line != '' else '\n'
+
+                    ability_desc = ability_desc.rstrip('\n').strip()
                     hero['abilities'].append({"name" : ability_name, "description" : ability_desc})
                 else:
                     # is the title for synergy partners?
                     match = partners_regex.match(section)
                     if match != None:
                         # each non-empty line before the next title will be a partner
-                        nextIdx, nextString = splitHeroInfo.__next__()
+                        nextString = splitHeroInfo.__next__()
                         while title_regex.match(nextString) is None:
                             if nextString != "":
                                 hero['partners'].append(nextString)
-                            nextIdx, nextString = splitHeroInfo.__next__()
+                            nextString = splitHeroInfo.__next__()
 
     def saveHeroImage(self, response, heroKey):
         """
@@ -131,13 +143,53 @@ class HeroListSpider(scrapy.Spider):
             logging.error(">>> Key is empty. Cannot search for image")
             return
 
-        local_image_path = "../../../images/" + heroKey + ".jpg"
+        image_folder = "../../../images/"
+        if not os.path.exists(image_folder):
+            os.mkdir(image_folder)
+
+        local_image_path = image_folder + heroKey + ".jpg"
         if not os.path.exists(local_image_path):
-            image_url = response.css('div.post-body div.separator a::attr(href)').extract()[0]
+            image_url = response.css('div.post-body div.separator a img::attr(src)').extract()[0]
             urllib.request.urlretrieve(image_url, local_image_path)
             logging.info(">>> Local image not found: Saved remote image to " + local_image_path)
         else:
             logging.info(">>> " + local_image_path + " already exists.")
+
+class PeekableList:
+    """
+        Custom iterable list wrapper which allows the user to peek one element ahead.
+    """
+    def __init__(self, list):
+        """
+            Constructor for PeekableList.
+
+            Args:
+                list    :   The list to iterate over.
+        """
+        self.data = list
+        self.maxIdx = len(self.data) - 1
+        self.currentIdx = -1
+    def __iter__(self):
+        return self
+    def __next__(self):
+        """
+            Points the iterator to the next element and returns the element.
+
+            Returns: The next element.
+            Raises: StopIteration exception if __next__() progresses past the list.
+        """
+        if (self.currentIdx == self.maxIdx):
+            raise StopIteration
+        self.currentIdx += 1
+        return self.data[self.currentIdx]
+
+    def peek(self):
+        """
+            Looks at the next upcoming element.
+
+            Returns: The next element, or None if at end of list.
+        """
+        return None if (self.currentIdx == self.maxIdx) else self.data[self.currentIdx + 1]
 
 class Hero(scrapy.Item):
     key = scrapy.Field()
