@@ -10,7 +10,6 @@ import StatusBarBackground from '../components/StatusBarBackground.js';
 import { HEADER_HEIGHT, CARD_ASPECT_RATIO, COLOR_SHU, COLOR_WEI, COLOR_WU, COLOR_NEUTRAL } from '../StyleConstants.js';
 import { ListView } from 'realm/react-native';
 import realm from '../data/realm.js';
-import initializeDummyData from '../data/initializer.js';
 import getImage from '../data/image_manifest.js';
 
 /*
