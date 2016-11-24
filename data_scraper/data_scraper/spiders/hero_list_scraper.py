@@ -104,9 +104,10 @@ class HeroListSpider(scrapy.Spider):
                 # is it an ability title?
                 match = ability_regex.match(section)
                 if match is not None:
-                    ability_name = match.group(1).strip().replace('\"', '') \
-                                                         .replace('\u201c', '') \
-                                                         .replace('\u201d', '')
+                    ability_name = match.group(1).replace('\"', '') \
+                                                 .replace('\u201c', '') \
+                                                 .replace('\u201d', '') \
+                                                 .strip()
                     keepLooping = True
                     ability_desc = ''
                     while keepLooping:
@@ -116,7 +117,7 @@ class HeroListSpider(scrapy.Spider):
                             line = splitHeroInfo.__next__()
                             ability_desc += (line + '\n') if line != '' else '\n'
 
-                    ability_desc = ability_desc.rstrip('\n')
+                    ability_desc = ability_desc.rstrip('\n').strip()
                     hero['abilities'].append({"name" : ability_name, "description" : ability_desc})
                 else:
                     # is the title for synergy partners?
