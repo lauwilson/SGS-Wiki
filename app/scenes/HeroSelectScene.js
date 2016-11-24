@@ -78,25 +78,6 @@ export default class HeroSelectScene extends Component {
         );
     }
 
-    _getFactionColor() {
-        let navBarColor;
-        let faction = this.props.name;
-        switch (faction) {
-            case 'Shu':
-                navBarColor = COLOR_SHU;
-                break;
-            case 'Wei':
-                navBarColor = COLOR_WEI;
-                break;
-            case 'Wu':
-                navBarColor = COLOR_WU;
-                break;
-            case 'Neutral':
-                navBarColor = COLOR_NEUTRAL;
-                break;
-        }
-        return navBarColor;
-    }
     _setFaction(faction) {
         let filter = 'faction = "' + faction + '"';
         this.setState({
