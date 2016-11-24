@@ -1,7 +1,9 @@
 'use strict';
 
-import { initializerRealm } from './realm.js';
+import { getInitializerRealm } from './realm.js';
 import _ from 'lodash';
+
+var initializerRealm = getInitializerRealm();
 
 /**
  *  Generates a hero key from the given string which represents a hero's partner.

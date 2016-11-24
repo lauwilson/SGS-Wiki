@@ -67,10 +67,12 @@ export default new Realm({
 });
 
 /*
- * Named export for use with the initialzer. Initialzer will initialzed a new Realm database.
+ * Named export for use with the initialzer. Initializer will initialize a new Realm database.
  * with the default name and path of default.realm. Initialized Realm object needs to be
  * manually extracted and put into the repository and the Android / iOS project manifests.
 */
-export const initializerRealm = new Realm({
-    schema: [Hero, Ability]
-});
+export function getInitializerRealm() {
+    return new Realm({
+        schema: [Hero, Ability]
+    });
+}
