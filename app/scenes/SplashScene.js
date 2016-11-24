@@ -22,7 +22,7 @@ export default class SplashScene extends Component {
         const pageTwoProps = () => Actions.heroSelect;
         return (
             <ViewContainer>
-                <StatusBarBackground style={{height: HEADER_HEIGHT }}/>
+                <StatusBarBackground />
                 <StatusBar barStyle='default' />
                 <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'blue' }}>
                     <Image source={require('../../images/default.jpg')} />

@@ -7,7 +7,7 @@ import Tabs from 'react-native-tabs';
 import Realm from 'realm';
 import ViewContainer from '../components/ViewContainer.js';
 import StatusBarBackground from '../components/StatusBarBackground.js';
-import { HEADER_HEIGHT, CARD_ASPECT_RATIO } from '../StyleConstants.js';
+import { HEADER_HEIGHT, CARD_ASPECT_RATIO, COLOR_SHU, COLOR_WEI, COLOR_WU, COLOR_NEUTRAL } from '../StyleConstants.js';
 import { ListView } from 'realm/react-native';
 import realm from '../data/realm.js';
 import initializeDummyData from '../data/initializer.js';
@@ -21,27 +21,26 @@ TODO: Most likely, the ListView container will overlap with the bottom tab-bar. 
 export default class HeroSelectScene extends Component {
     constructor(props) {
         super(props);
-        //initializeDummyData();
+        console.log("PROPS HERE");
+        console.log(this.props);
 
         let dataSource = new ListView.DataSource({
             rowHasChanged(a,b) {
                 return a.done !== b.done || a.text !== b.text || a.items || b.items;
             }
         });
-        this.shuHeroes = realm.objects('Hero').filtered('faction = "Shu"');
-        this.weiHeroes = realm.objects('Hero').filtered('faction = "Wei"');
-        this.wuHeroes = realm.objects('Hero').filtered('faction = "Wu"');
-        this.neutralHeroes = realm.objects('Hero').filtered('faction = "Neutral"');
+
         this.state = { dataSource: dataSource.cloneWithRows(realm.objects('Hero').filtered('faction = "Shu"')), selectedFaction: 'Shu' }
     }
 
-    //_renderRow(rowData, sectionID, rowID, highlightRow) {
     _renderRow(rowData) {
         var margin = 10;
         var cardWidth = (this.screenWidth - (8 * margin)) / 3;
         var cardHeight = CARD_ASPECT_RATIO * cardWidth;
-
-        var goToCardDetailWithProps = () => Actions.cardDetail({heroData: rowData, title: rowData.name});
+        var goToCardDetailWithProps = () => Actions.cardDetail({hero: rowData,
+                                                                title: rowData.name,
+                                                                navigationBarStyle: this.navBarStyle,
+                                                                leftButtonIconStyle: this.leftButtonIconStyle});
 
         return (
             <TouchableOpacity style={{width: cardWidth,
@@ -59,21 +58,22 @@ export default class HeroSelectScene extends Component {
 
     render() {
         this.screenWidth = Dimensions.get('window').width;
-
         return (
-            <ViewContainer style={{flex: 1, backgroundColor: 'red'}}>
+            <ViewContainer style={{flex: 1, backgroundColor: 'red', paddingBottom: 200}}>
                 <StatusBarBackground style={{ height: HEADER_HEIGHT }} />
                 <ListView contentContainerStyle={styles.list}
                             dataSource={this.state.dataSource}
                             renderRow={this._renderRow}
-                            screenWidth={this.screenWidth} />
-
+                            screenWidth={this.screenWidth}
+                            navBarStyle={this.props.navigationBarStyle}
+                            leftButtonIconStyle={this.props.leftButtonIconStyle} />
+                <View style={styles.forceTabsMargin} />
                 <Tabs selected={this.state.selectedFaction} style={{backgroundColor:'white'}}
                         onSelect={el => this._setFaction(el.props.name)}>
-                    <Text name="Shu" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}} selectedStyle={{color:'red'}}>Shu</Text>
-                    <Text name="Wei" selectedIconStyle={{borderTopWidth:2,borderTopColor:'blue'}} selectedStyle={{color:'blue'}}>Wei</Text>
-                    <Text name="Wu" selectedIconStyle={{borderTopWidth:2,borderTopColor:'green'}} selectedStyle={{color:'green'}}>Wu</Text>
-                    <Text name="Neutral" selectedIconStyle={{borderTopWidth:2, borderTopColor: 'grey'}} selectedStyle={{color:'grey'}}>Neutral</Text>
+                    <Text name="Shu" selectedIconStyle={{borderTopWidth:3,borderTopColor: COLOR_SHU }} selectedStyle={{color: COLOR_SHU}}>Shu</Text>
+                    <Text name="Wei" selectedIconStyle={{borderTopWidth:3,borderTopColor: COLOR_WEI }} selectedStyle={{color: COLOR_WEI}}>Wei</Text>
+                    <Text name="Wu" selectedIconStyle={{borderTopWidth:3,borderTopColor: COLOR_WU }} selectedStyle={{color: COLOR_WU}}>Wu</Text>
+                    <Text name="Neutral" selectedIconStyle={{borderTopWidth:3, borderTopColor: COLOR_NEUTRAL }} selectedStyle={{color: COLOR_NEUTRAL}}>Neutral</Text>
                 </Tabs>
             </ViewContainer>
         );
@@ -85,6 +85,23 @@ export default class HeroSelectScene extends Component {
             dataSource: this.state.dataSource.cloneWithRows(realm.objects('Hero').filtered(filter)),
             selectedFaction: faction
         });
+
+        let navBarColor;
+        switch (faction) {
+            case 'Shu':
+                navBarColor = COLOR_SHU;
+                break;
+            case 'Wei':
+                navBarColor = COLOR_WEI;
+                break;
+            case 'Wu':
+                navBarColor = COLOR_WU;
+                break;
+            case 'Neutral':
+                navBarColor = COLOR_NEUTRAL;
+                break;
+        }
+        Actions.refresh({navigationBarStyle: { backgroundColor: navBarColor, borderBottomColor: '#000' }})
     }
 }
 
@@ -93,10 +110,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        backgroundColor: 'blue'
     },
     item: {
         backgroundColor: '#CCC',
         margin: 10
+    },
+    forceTabsMargin: {
+        height: 50
     }
 })

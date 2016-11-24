@@ -18,7 +18,7 @@ export default class CardSelectScene extends Component {
                         <Text>Heroes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={Actions.second} style={{ alignItems: 'center', backgroundColor: 'cyan' }}>
-                        <Image source={require('../../images/wooden_cow.jpg')} />
+                        <Image source={require('../../images/default.jpg')} />
                         <Text>Cards</Text>
                     </TouchableOpacity>
                 </View>
