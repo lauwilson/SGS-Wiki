@@ -67,17 +67,36 @@ export default class HeroSelectScene extends Component {
                             navBarStyle={this.props.navigationBarStyle}
                             leftButtonIconStyle={this.props.leftButtonIconStyle} />
                 <View style={styles.forceTabsMargin} />
-                <Tabs selected={this.state.selectedFaction} style={{backgroundColor:'white'}}
+                <Tabs selected={this.state.selectedFaction} style={{ backgroundColor:'white', borderTopWidth: 1, borderTopColor: '#000' }}
                         onSelect={el => this._setFaction(el.props.name)}>
-                    <Text name="Shu" selectedIconStyle={{borderTopWidth:3,borderTopColor: COLOR_SHU }} selectedStyle={{color: COLOR_SHU}}>Shu</Text>
-                    <Text name="Wei" selectedIconStyle={{borderTopWidth:3,borderTopColor: COLOR_WEI }} selectedStyle={{color: COLOR_WEI}}>Wei</Text>
-                    <Text name="Wu" selectedIconStyle={{borderTopWidth:3,borderTopColor: COLOR_WU }} selectedStyle={{color: COLOR_WU}}>Wu</Text>
-                    <Text name="Neutral" selectedIconStyle={{borderTopWidth:3, borderTopColor: COLOR_NEUTRAL }} selectedStyle={{color: COLOR_NEUTRAL}}>Neutral</Text>
+                    <Text name="Shu" selectedIconStyle={{ backgroundColor: COLOR_SHU }} >Shu</Text>
+                    <Text name="Wei" selectedIconStyle={{ backgroundColor: COLOR_WEI }} >Wei</Text>
+                    <Text name="Wu" selectedIconStyle={{ backgroundColor: COLOR_WU }} >Wu</Text>
+                    <Text name="Neutral" selectedIconStyle={{ backgroundColor: COLOR_NEUTRAL }} >Neutral</Text>
                 </Tabs>
             </ViewContainer>
         );
     }
 
+    _getFactionColor() {
+        let navBarColor;
+        let faction = this.props.name;
+        switch (faction) {
+            case 'Shu':
+                navBarColor = COLOR_SHU;
+                break;
+            case 'Wei':
+                navBarColor = COLOR_WEI;
+                break;
+            case 'Wu':
+                navBarColor = COLOR_WU;
+                break;
+            case 'Neutral':
+                navBarColor = COLOR_NEUTRAL;
+                break;
+        }
+        return navBarColor;
+    }
     _setFaction(faction) {
         let filter = 'faction = "' + faction + '"';
         this.setState({
