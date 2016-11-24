@@ -56,7 +56,7 @@ function getHeroFromPartnerString(partner) {
  *        Currently, function does not perform error checking and will catastrophically
  *        fail if the above requirement is not met.
  */
-export default function initializeData() {
+export function initializeData() {
     realm.write(() => {
         realm.deleteAll();
     })
