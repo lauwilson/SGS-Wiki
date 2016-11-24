@@ -34,7 +34,6 @@ export default class StatusBarBackground extends Component {
 const styles = StyleSheet.create({
     default: {
         height: 20,
-        backgroundColor: 'black',
     }
 
 });
