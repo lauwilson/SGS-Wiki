@@ -15,7 +15,6 @@ import getImage from '../data/image_manifest.js';
 /*
 TODO: Clean up debug styling in returned JSX elements
 TODO: Set constant styling colors to match true faction colours.
-TODO: Most likely, the ListView container will overlap with the bottom tab-bar. Will need to fix in future once data is injected.
 */
 export default class HeroSelectScene extends Component {
     constructor(props) {
@@ -44,13 +43,11 @@ export default class HeroSelectScene extends Component {
         return (
             <TouchableOpacity style={{width: cardWidth,
                                         height: cardHeight,
-                                        margin: 10,
-                                        backgroundColor: 'red'}}
+                                        margin: 10}}
                                 onPress={goToCardDetailWithProps}>
                 <Image source={getImage(rowData.key)}
                                  style={{width: cardWidth,
-                                        height: cardHeight,
-                                        backgroundColor: 'green'}} />
+                                        height: cardHeight}} />
             </TouchableOpacity>
         );
     }
