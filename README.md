@@ -1,7 +1,6 @@
-TODO
-----
+Todo List
+---------
 - Refactor the styles into proper style objects on the various scenes.
-- Set the margins properly for the Hero Detail scene.
 
 Issues with XCode 8
 -------------------
