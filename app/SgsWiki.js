@@ -26,7 +26,7 @@ class SgsWiki extends Component {
 
 const scenes = Actions.create(
     <Scene key='root'>
-        <Scene initial={true} key='splash' component={SplashScene} hideNavBar={true} title='Splash Screen' />
+        <Scene initial={true} key='splash' component={SplashScene} hideNavBar={true} title='' />
         <Scene key='second' component={SecondScene} title='Second Scene' tabs={true} />
         <Scene key='cardSelect' component={CardSelectScene} title='Card Select Scene' />
         <Scene key='cardDetail' component={CardDetailScene} title='Card Details' />
