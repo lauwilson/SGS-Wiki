@@ -3,7 +3,11 @@ import { Platform } from 'react-native';
 
 export const HEADER_HEIGHT = (Platform.OS === 'ios') ? 64 : 54;
 
+// height / width
 export const CARD_ASPECT_RATIO = 1000 / 704;
+
+// height / width
+export const LOGO_ASPECT_RATIO = 232 / 500;
 
 export const COLOR_SHU = 'rgb(200, 112, 97)'
 export const COLOR_WEI = 'rgb(114, 140, 159)'
