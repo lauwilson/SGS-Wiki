@@ -2,9 +2,9 @@ San Guo Sha Wiki - Mobile App
 =============================
 This mobile app provides an offline repository of translated cards for the Chinese card game, San Guo Sha.
 
-The intention of this personal project was to deprecate the use of Ricky Chua's online website: http://sanguoshaenglish.blogspot.ca/2010/02/kw-characters.html
+The intention of this personal project was to deprecate the use of Ricky Chua's online website when playing the game with friends: http://sanguoshaenglish.blogspot.ca/2010/02/kw-characters.html
 
-Card details are scraped from Ricky's blog and stored into a Realm database.
+Card details are scraped using a Python script from Ricky's blog and stored into a Realm database.
 
 Since the translations are provided from Ricky's blog, please see LICENSE.md for the restrictions around this code. (TL;DR: This code will not be allowed to be repurposed / published on the Google Play Store or Apple App Store)
 
