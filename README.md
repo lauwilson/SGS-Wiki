@@ -1,7 +1,23 @@
+San Guo Sha Wiki - Mobile App
+=============================
+This mobile app provides an offline repository of translated cards for the Chinese card game, San Guo Sha.
+
+The intention of this personal project was to deprecate the use of Ricky Chua's online website: http://sanguoshaenglish.blogspot.ca/2010/02/kw-characters.html
+
+Card details are scraped from Ricky's blog and stored into a Realm database.
+
+Since the translations are provided from Ricky's blog, please see LICENSE.md for the restrictions around this code. (TL;DR: This code will not be allowed to be repurposed / published on the Google Play Store or Apple App Store)
+
+Heroes are filtered by their faction and the user is able to also access the details of each hero's synergistic partners:
+
+![Faction Filter](../master/README_images/sgs-factions.gif?raw=true "Faction Filter")
+![Hero Details](../master/README_images/sgs-details.gif?raw=true "Hero Details")
+
+
 Todo List
 ---------
 - Refactor the styles into proper style objects on the various scenes.
-- Refactor the Touchable images into it's own React component.
+- Refactor the Touchable images into its own React component.
 
 Issues with XCode 8
 -------------------
