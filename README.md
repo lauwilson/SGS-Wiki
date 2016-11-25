@@ -1,3 +1,8 @@
+TODO
+----
+- Refactor the styles into proper style objects on the various scenes.
+- Set the margins properly for the Hero Detail scene.
+
 Issues with XCode 8
 -------------------
 Need to disable the -Werror and -Wall C compiler flags from the xcode project.
