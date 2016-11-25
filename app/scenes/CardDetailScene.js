@@ -51,8 +51,7 @@ export default class CardDetailScene extends Component {
                             return (
                                 <TouchableOpacity key={index} style={{width: partnerCardWidth,
                                                             height: partnerCardHeight,
-                                                            margin: 10,
-                                                            backgroundColor: 'red'}}
+                                                            margin: 10}}
                                                     onPress={goToCardDetailWithProps}
                                 >
                                     <Image source={getImage(partner.key)}

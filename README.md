@@ -1,6 +1,7 @@
 Todo List
 ---------
 - Refactor the styles into proper style objects on the various scenes.
+- Refactor the Touchable images into it's own React component.
 
 Issues with XCode 8
 -------------------
