@@ -20,8 +20,6 @@ TODO: Set constant styling colors to match true faction colours.
 export default class HeroSelectScene extends Component {
     constructor(props) {
         super(props);
-        console.log("PROPS HERE");
-        console.log(this.props);
 
         let dataSource = new ListView.DataSource({
             rowHasChanged(a,b) {

@@ -14,8 +14,8 @@ import realm from '../data/realm.js';
 export default class SplashScene extends Component {
     constructor(props) {
         super(props);
-        console.log(realm.path);
     }
+    
     static propTypes = { title: PropTypes.string.isRequired }
 
     render() {

@@ -13,8 +13,6 @@ import getImage from '../data/image_manifest.js'
 export default class CardDetailScene extends Component {
     constructor(props) {
         super(props);
-        console.log("============");
-        console.log(this.props.navigationBarStyle)
     }
 
     render() {
