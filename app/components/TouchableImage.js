@@ -1,9 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import getImage from '../data/image_manifest.js';
-import { Actions } from 'react-native-router-flux';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 {/*
     Currently class is not in use, nor does it work as intended.
@@ -11,9 +9,15 @@ import { Actions } from 'react-native-router-flux';
 export default class TouchableImage extends Component {
     render() {
         return (
-            <TouchableOpacity style={this.props.style} onPress={Actions.cardDetail}>
-                <Image source={this.props.source} style={this.props.style, styles.noMargin} resizeMode='contain'/>
+            <TouchableOpacity style={this.props.style} onPress={this.props.onPress}>
+                <Image source={this.props.source} style={[this.props.style, styles.noMargin, this.props.customImageStyle]} resizeMode='contain'/>
             </TouchableOpacity>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    noMargin: {
+        margin : 0
+    }
+});
