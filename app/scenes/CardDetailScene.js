@@ -5,6 +5,7 @@ import { Dimensions, View, ScrollView, Text, Image, StyleSheet, TouchableOpacity
 import { Actions } from 'react-native-router-flux';
 import ViewContainer from '../components/ViewContainer.js';
 import StatusBarBackground from '../components/StatusBarBackground.js';
+import TouchableImage from '../components/TouchableImage.js';
 import { HEADER_HEIGHT, CARD_ASPECT_RATIO } from '../StyleConstants.js';
 import realm from '../data/realm.js';
 import getImage from '../data/image_manifest.js'
@@ -49,19 +50,13 @@ export default class CardDetailScene extends Component {
                                                                                     navigationBarStyle: navigationBarStyle,
                                                                                     leftButtonIconStyle: leftButtonIconStyle});
                             return (
-                                <TouchableOpacity key={index} style={{width: partnerCardWidth,
-                                                            height: partnerCardHeight,
-                                                            margin: 10}}
-                                                    onPress={goToCardDetailWithProps}
-                                >
-                                    <Image source={getImage(partner.key)}
-                                            style={[styles.heroImage, { marginLeft: 10,
-                                                                        marginRight: 10,
-                                                                        height: partnerCardHeight,
-                                                                        width: partnerCardWidth }]}
-                                    />
-                                </TouchableOpacity>
-                            )
+                                <TouchableImage key={index}
+                                                style={{width: partnerCardWidth,
+                                                        height: partnerCardHeight,
+                                                        margin: 10}}
+                                                onPress={goToCardDetailWithProps}
+                                                source={getImage(partner.key)} />
+                            );
                         })
                     }
                     </ScrollView>
@@ -90,8 +85,6 @@ const styles = StyleSheet.create({
     heroImage: {
         alignSelf: 'center',
         marginBottom: 15,
-        width: 100,
-        height: 200
     },
     partnerList: {
         alignSelf: 'center',

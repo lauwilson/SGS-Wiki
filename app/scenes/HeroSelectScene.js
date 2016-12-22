@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import Tabs from 'react-native-tabs';
 import Realm from 'realm';
 import ViewContainer from '../components/ViewContainer.js';
+import TouchableImage from '../components/TouchableImage.js';
 import StatusBarBackground from '../components/StatusBarBackground.js';
 import { HEADER_HEIGHT, CARD_ASPECT_RATIO, COLOR_SHU, COLOR_WEI, COLOR_WU, COLOR_NEUTRAL } from '../StyleConstants.js';
 import { ListView } from 'realm/react-native';
@@ -41,14 +42,11 @@ export default class HeroSelectScene extends Component {
                                                                 leftButtonIconStyle: this.leftButtonIconStyle});
 
         return (
-            <TouchableOpacity style={{width: cardWidth,
-                                        height: cardHeight,
-                                        margin: 10}}
-                                onPress={goToCardDetailWithProps}>
-                <Image source={getImage(rowData.key)}
-                                 style={{width: cardWidth,
-                                        height: cardHeight}} />
-            </TouchableOpacity>
+            <TouchableImage style={{width: cardWidth,
+                                    height: cardHeight,
+                                    margin: 10}}
+                            onPress={goToCardDetailWithProps}
+                            source={getImage(rowData.key)} />
         );
     }
 
