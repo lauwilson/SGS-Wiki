@@ -17,7 +17,6 @@ Heroes are filtered by their faction and the user is able to also access the det
 Todo List
 ---------
 - Refactor the styles into proper style objects on the various scenes.
-- Refactor the Touchable images into its own React component.
 
 Issues with XCode 8
 -------------------
