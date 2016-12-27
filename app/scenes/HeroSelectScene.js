@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Dimensions, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import Tabs from 'react-native-tabs';
 import Realm from 'realm';
 import ViewContainer from '../components/ViewContainer.js';
@@ -52,7 +52,7 @@ export default class HeroSelectScene extends Component {
         this.screenWidth = Dimensions.get('window').width;
         return (
             <ViewContainer style={{flex: 1, backgroundColor: 'red', paddingBottom: 200}}>
-                <StatusBarBackground style={{ height: HEADER_HEIGHT }} />
+                <StatusBarBackground style={{ height: HEADER_HEIGHT }} statusBarColor={this.props.statusBarColor} />
                 <ListView contentContainerStyle={styles.list}
                             dataSource={this.state.dataSource}
                             renderRow={this._renderRow}
@@ -93,7 +93,7 @@ export default class HeroSelectScene extends Component {
                 navBarColor = COLOR_NEUTRAL;
                 break;
         }
-        Actions.refresh({navigationBarStyle: { backgroundColor: navBarColor, borderBottomColor: '#000' }})
+        Actions.heroSelect({type: ActionConst.POP_AND_REPLACE, navigationBarStyle: { backgroundColor: navBarColor, borderBottomColor: '#000' }, statusBarColor: navBarColor})
     }
 }
 

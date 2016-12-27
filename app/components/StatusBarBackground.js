@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 
 export default class StatusBarBackground extends Component {
     constructor(props) {
@@ -25,7 +25,9 @@ export default class StatusBarBackground extends Component {
     render() {
         var componentStyle = this._getStyle();
         return(
-            <View style={componentStyle} />
+            <View style={componentStyle}>
+                <StatusBar backgroundColor={this.props.statusBarColor} translucent={false} />
+            </View>
         );
     }
 }
