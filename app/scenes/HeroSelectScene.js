@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Dimensions, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import Tabs from 'react-native-tabs';
 import Realm from 'realm';
 import ViewContainer from '../components/ViewContainer.js';
@@ -50,18 +50,22 @@ export default class HeroSelectScene extends Component {
 
     render() {
         this.screenWidth = Dimensions.get('window').width;
+        let _listView;
         return (
             <ViewContainer style={{flex: 1, backgroundColor: 'red', paddingBottom: 200}}>
-                <StatusBarBackground style={{ height: HEADER_HEIGHT }} />
-                <ListView contentContainerStyle={styles.list}
-                            dataSource={this.state.dataSource}
-                            renderRow={this._renderRow}
-                            screenWidth={this.screenWidth}
-                            navBarStyle={this.props.navigationBarStyle}
-                            leftButtonIconStyle={this.props.leftButtonIconStyle} />
+                <StatusBarBackground style={{ height: HEADER_HEIGHT }} statusBarColor={this.props.statusBarColor} />
+                <ListView
+                    ref={ (listView) => { _listView = listView} }
+                    contentContainerStyle={styles.list}
+                    dataSource={this.state.dataSource}
+                    renderRow={this._renderRow}
+                    screenWidth={this.screenWidth}
+                    navBarStyle={this.props.navigationBarStyle}
+                    leftButtonIconStyle={this.props.leftButtonIconStyle} />
                 <View style={styles.forceTabsMargin} />
                 <Tabs selected={this.state.selectedFaction} style={{ backgroundColor:'white', borderTopWidth: 1, borderTopColor: '#000' }}
-                        onSelect={el => this._setFaction(el.props.name)}>
+                        onSelect={el => { _listView.scrollTo({y: 0, animated: false});
+                                          this._setFaction(el.props.name);}}>
                     <Text name="Shu" selectedIconStyle={{ backgroundColor: COLOR_SHU }} >Shu</Text>
                     <Text name="Wei" selectedIconStyle={{ backgroundColor: COLOR_WEI }} >Wei</Text>
                     <Text name="Wu" selectedIconStyle={{ backgroundColor: COLOR_WU }} >Wu</Text>
@@ -93,7 +97,8 @@ export default class HeroSelectScene extends Component {
                 navBarColor = COLOR_NEUTRAL;
                 break;
         }
-        Actions.refresh({navigationBarStyle: { backgroundColor: navBarColor, borderBottomColor: '#000' }})
+        Actions.refresh({navigationBarStyle: { backgroundColor: navBarColor, borderBottomColor: '#000' }, statusBarColor: navBarColor})
+
     }
 }
 

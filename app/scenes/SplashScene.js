@@ -15,7 +15,7 @@ export default class SplashScene extends Component {
     constructor(props) {
         super(props);
     }
-    
+
     static propTypes = { title: PropTypes.string.isRequired }
 
     render() {
@@ -24,8 +24,7 @@ export default class SplashScene extends Component {
         let logoHeight = LOGO_ASPECT_RATIO * logoWidth;
         return (
             <ViewContainer>
-                <StatusBarBackground />
-                <StatusBar barStyle='default' />
+                <StatusBarBackground statusBarColor={this.props.statusBarColor} />
                 <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
                     <TouchableOpacity style={{ alignItems: 'center' }} onPress={Actions.heroSelect}>
                         <Image source={require('../../images/sgs-logo.jpg')} style={{ height: logoHeight, width: logoWidth, marginBottom: 30}} />
